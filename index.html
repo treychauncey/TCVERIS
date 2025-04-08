@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TCVERIS Base Camp Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>TCVERIS Base Camp Calculator</h1>
+        <label for="personnel">Number of Personnel:</label>
+        <input type="number" id="personnel" value="100">
+
+        <label for="days">Number of Days:</label>
+        <input type="number" id="days" value="30">
+
+        <label for="costPerPerson">Cost per Person per Day ($):</label>
+        <input type="number" id="costPerPerson" value="125">
+
+        <button onclick="calculate()">Calculate</button>
+
+        <div id="result"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
