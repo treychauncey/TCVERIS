@@ -4,7 +4,7 @@
     "start_url": "index.html",
     "display": "standalone",
     "background_color": "#ffffff",
-    "description": "Field app for calculating base camp logistics",
+    "description": "Internal pricing tool for TCVERIS operations",
     "icons": [
         {
             "src": "icons/icon-192.png",
