@@ -10,4 +10,4 @@ This is a lightweight, offline-capable tool to calculate base camp costs.
 
 ---
 
-Designed for rapid estimates and briefings. Go
+Designed for rapid estimates and briefings.
