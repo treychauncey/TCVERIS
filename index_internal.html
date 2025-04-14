@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TCVERIS Base Camp Calculator</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="icons/icon-192.png" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+</head>
+<body>
+  <header>
+    <h1>TCVERIS Base Camp Calculator</h1>
+    <p class="subtitle">✦ Unraveling Complexity ✦ Delivering Certainty ✦</p>
+  </header>
+  <main>
+    <section class="inputs">
+<label for="mode">Pricing Mode:</label>
+<select id="mode">
+<option value="1">Cost Only</option>
+<option value="1.15">+ G&A</option>
+<option value="1.35">+ Profit</option>
+<option value="1.45">+ Contingency</option>
+</select>
+      <label for="pax">Personnel (PAX):</label>
+      <input type="number" id="pax" />
+      <label for="days">Duration (Days):</label>
+      <input type="number" id="days" />
+    </section>
+    <section class="results">
+      <div id="lodging">Lodging: $<span></span></div>
+      <div id="hygiene">Hygiene: $<span></span></div>
+      <div id="food">Food & Water: $<span></span></div>
+      <div id="waste">Waste: $<span></span></div>
+      <div id="power">Power: $<span></span></div>
+      <div id="security">Security: $<span></span></div>
+      <div id="medical">Medical: $<span></span></div>
+      <div class="grand-total">Total: $<span></span></div>
+      <div class="pppd">PPPD: $<span></span></div>
+    </section>
+  </main>
+  <script src="script_internal.js"></script>
+</body>
+</html>

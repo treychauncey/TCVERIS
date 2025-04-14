@@ -1,0 +1,36 @@
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f8f9fa;
+  color: #333;
+  margin: 0;
+}
+header {
+  background: #2a2d2f;
+  color: white;
+  padding: 1em;
+  text-align: center;
+}
+.subtitle {
+  font-size: 0.9em;
+  color: #ccc;
+}
+main {
+  padding: 20px;
+}
+input, select {
+  display: block;
+  margin: 10px auto;
+  padding: 10px;
+  width: 90%;
+  max-width: 400px;
+}
+.results div {
+  margin: 10px 0;
+  font-size: 1.1em;
+}
+.grand-total, .pppd {
+  font-weight: bold;
+  margin-top: 20px;
+  font-size: 1.2em;
+}
