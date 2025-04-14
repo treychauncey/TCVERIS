@@ -1,0 +1,38 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #f8f9fa;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+}
+header {
+    background: #1e3a8a;
+    color: white;
+    padding: 1em 0;
+}
+.subtitle {
+    font-size: 0.9em;
+    color: #cbd5e1;
+}
+main {
+    margin-top: 2em;
+}
+input, select, button {
+    margin: 0.5em;
+    padding: 0.5em;
+    width: 80%;
+}
+button {
+    background: #1e3a8a;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+.category {
+    margin-top: 1em;
+}
+.grand-total, .pppd {
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-top: 1.5em;
+}

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TCVERIS Base Camp Calculator</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="icon" href="icons/icon-192.png" />
+</head>
+<body>
+    <header>
+        <h1>TCVERIS Base Camp Calculator</h1>
+        <p class="subtitle">✦ Unraveling Complexity ✦ Delivering Certainty ✦</p>
+    </header>
+    <main>
+        <section class="inputs">
+            <label for="pax">Personnel (PAX):</label>
+            <input type="number" id="pax" placeholder="e.g., 100" />
+            <label for="days">Duration (Days):</label>
+            <input type="number" id="days" placeholder="e.g., 30" />
+        </section>
+        <section id="results">
+            <div class="category" id="lodging">Lodging: $<span></span></div>
+            <div class="category" id="hygiene">Hygiene: $<span></span></div>
+            <div class="category" id="food">Food & Water: $<span></span></div>
+            <div class="category" id="waste">Waste: $<span></span></div>
+            <div class="category" id="power">Power: $<span></span></div>
+            <div class="category" id="security">Security: $<span></span></div>
+            <div class="category" id="medical">Medical: $<span></span></div>
+            <div class="grand-total">Total Cost: $<span></span></div>
+            <div class="pppd">PPPD: $<span></span></div>
+        </section>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
