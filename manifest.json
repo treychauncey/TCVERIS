@@ -1,7 +1,7 @@
 
 {
   "name": "TCVERIS Base Camp Calculator",
-  "short_name": "BaseCampCalc",
+  "short_name": "TCVERISBaseCampCalc",
   "start_url": "index.html",
   "display": "standalone",
   "background_color": "#ffffff",
