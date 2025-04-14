@@ -3,24 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <title>TCVERIS Base Camp Calculator</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
 </head>
 <body>
-    <div class="container">
-        <h1>TCVERIS Base Camp Calculator</h1>
-        <label for="personnel">Number of Personnel:</label>
-        <input type="number" id="personnel" value="100">
-
-        <label for="days">Number of Days:</label>
+    <h1>TCVERIS Base Camp Calculator</h1>
+    <div id="inputs">
+        <label for="pax">Personnel (PAX):</label>
+        <input type="number" id="pax" value="100"><br>
+        <label for="days">Duration (Days):</label>
         <input type="number" id="days" value="30">
-
-        <label for="costPerPerson">Cost per Person per Day ($):</label>
-        <input type="number" id="costPerPerson" value="125">
-
-        <button onclick="calculate()">Calculate</button>
-
-        <div id="result"></div>
     </div>
+
+    <div class="tabs">
+        <button onclick="calculate('lodging')">Lodging</button>
+        <button onclick="calculate('hygiene')">Hygiene</button>
+        <button onclick="calculate('food')">Food & Water</button>
+    </div>
+
+    <div id="results">
+        <h3>Results:</h3>
+        <div id="lodging-result"></div>
+        <div id="hygiene-result"></div>
+        <div id="food-result"></div>
+        <div id="total-result"></div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
