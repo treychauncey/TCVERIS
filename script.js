@@ -1,7 +1,7 @@
 function calculate() {
     const pax = parseInt(document.getElementById('pax').value || 0);
     const days = parseInt(document.getElementById('days').value || 0);
-    const markup = parseFloat(document.getElementById('markup').value || 1);
+    const markup = 1.45;
 
     const rates = {
         lodging: 90, hygiene: 25, food: 55,
@@ -20,6 +20,5 @@ function calculate() {
     document.querySelector('.pppd span').textContent = pppd.toFixed(2);
 }
 
-document.getElementById('markup').addEventListener('change', calculate);
 document.getElementById('pax').addEventListener('input', calculate);
 document.getElementById('days').addEventListener('input', calculate);
