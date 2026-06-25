@@ -1,45 +1,231 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TCVERIS Base Camp Calculator</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="manifest" href="manifest.json" />
-  <link rel="icon" href="icons/icon-192.png" />
-  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>TCVERIS Base Camp Calculator</title>
+<link rel="manifest" href="manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#0B0B09;--stone:#13181D;--stone-2:#1B2127;
+    --gunmetal:#8A9099;--gunmetal-lt:#B4BAC1;--bronze:#9A7B4F;
+    --paper:#E4E6E8;--paper-dim:#9BA0A6;--line:rgba(228,230,232,.14);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--black);color:var(--paper);font-family:"Source Serif 4",Georgia,serif;line-height:1.5;-webkit-font-smoothing:antialiased;padding-bottom:60px}
+  .mono{font-family:"JetBrains Mono",monospace}
+  h1,h2,h3,.disp{font-family:"Saira Condensed",sans-serif}
+  .wrap{max-width:880px;margin:0 auto;padding:0 24px}
+
+  header{background:var(--stone);border-bottom:1px solid var(--line);padding:38px 0 30px;text-align:center}
+  header h1{font-weight:700;font-size:clamp(28px,5vw,40px);letter-spacing:.04em;color:var(--paper)}
+  header .tag{font-family:"JetBrains Mono";font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--bronze);margin-top:12px}
+  header .sub{color:var(--paper-dim);font-size:16px;max-width:60ch;margin:18px auto 0}
+
+  section{padding:40px 0}
+  .sec-eyebrow{font-family:"JetBrains Mono";font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--gunmetal-lt);margin-bottom:22px}
+
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  @media(max-width:640px){.grid{grid-template-columns:1fr}}
+  .field{display:flex;flex-direction:column;gap:8px}
+  .field label{font-family:"JetBrains Mono";font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--paper-dim)}
+  .field input,.field select{background:var(--stone-2);border:1px solid var(--line);color:var(--paper);font-family:"Source Serif 4";font-size:16px;padding:13px 14px;border-radius:2px}
+  .field input:focus,.field select:focus{outline:2px solid var(--gunmetal);outline-offset:1px}
+  .toggle-row{display:flex;gap:10px;flex-wrap:wrap}
+  .toggle-row button{flex:1;min-width:90px;background:var(--stone-2);border:1px solid var(--line);color:var(--paper-dim);font-family:"JetBrains Mono";font-size:13px;padding:11px;border-radius:2px;cursor:pointer;transition:.15s}
+  .toggle-row button.on{background:var(--gunmetal);color:var(--black);border-color:var(--gunmetal);font-weight:600}
+
+  .calc-btn{display:block;width:100%;margin-top:30px;background:var(--bronze);color:var(--black);font-family:"Saira Condensed";font-weight:700;font-size:18px;letter-spacing:.1em;text-transform:uppercase;border:none;padding:18px;border-radius:2px;cursor:pointer;transition:.15s}
+  .calc-btn:hover{background:var(--gunmetal-lt)}
+
+  .results{margin-top:10px;display:none}
+  .results.show{display:block}
+  .rgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:10px}
+  @media(max-width:640px){.rgrid{grid-template-columns:1fr}}
+  .rcard{background:var(--stone);padding:24px 22px}
+  .rcard .rlabel{font-family:"JetBrains Mono";font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--paper-dim)}
+  .rcard .rval{font-family:"Saira Condensed";font-weight:700;font-size:34px;color:var(--gunmetal-lt);line-height:1;margin:8px 0 6px}
+  .rcard .rval span{font-size:16px;color:var(--paper-dim);font-weight:500}
+  .rcard .rbasis{font-size:13px;color:var(--paper-dim);line-height:1.4;font-style:italic}
+  .summary-bar{display:flex;gap:0;background:var(--stone-2);border:1px solid var(--line);margin-top:10px}
+  .summary-bar div{flex:1;padding:20px;text-align:center;border-left:1px solid var(--line)}
+  .summary-bar div:first-child{border-left:none}
+  .summary-bar .sv{font-family:"Saira Condensed";font-weight:700;font-size:30px;color:var(--paper)}
+  .summary-bar .sl{font-family:"JetBrains Mono";font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--paper-dim);margin-top:6px}
+
+  .note{font-size:13px;color:var(--paper-dim);margin-top:24px;line-height:1.55;border-top:1px solid var(--line);padding-top:18px}
+  .note b{color:var(--gunmetal-lt);font-weight:600}
+  footer{text-align:center;padding:30px 0;color:var(--paper-dim);font-family:"JetBrains Mono";font-size:11px;letter-spacing:.1em;border-top:1px solid var(--line);margin-top:40px}
+  a.back{color:var(--bronze);text-decoration:none;font-family:"JetBrains Mono";font-size:12px;letter-spacing:.1em}
+</style>
 </head>
 <body>
-  <header>
-    <h1>TCVERIS Base Camp Calculator</h1>
-    <p class="subtitle">✦ Unraveling Complexity ✦ Delivering Certainty ✦</p>
-  </header>
-  <main>
-    <section class="inputs">
-<label for="mode">Pricing Mode:</label>
-<select id="mode">
-<option value="1">Cost Only</option>
-<option value="1.15">+ G&A</option>
-<option value="1.35">+ Profit</option>
-<option value="1.45">+ Contingency</option>
-</select>
-      <label for="pax">Personnel (PAX):</label>
-      <input type="number" id="pax" />
-      <label for="days">Duration (Days):</label>
-      <input type="number" id="days" />
-    </section>
-    <section class="results">
-      <div id="lodging">Lodging: $<span></span></div>
-      <div id="hygiene">Hygiene: $<span></span></div>
-      <div id="food">Food & Water: $<span></span></div>
-      <div id="waste">Waste: $<span></span></div>
-      <div id="power">Power: $<span></span></div>
-      <div id="security">Security: $<span></span></div>
-      <div id="medical">Medical: $<span></span></div>
-      <div class="grand-total">Total: $<span></span></div>
-      <div class="pppd">PPPD: $<span></span></div>
-    </section>
-  </main>
-  <script src="script_internal.js"></script>
+
+<header>
+  <div class="wrap">
+    <h1>Base Camp Calculator</h1>
+    <div class="tag">Unraveling Complexity &middot; Delivering Certainty</div>
+    <p class="sub">Estimate minimum life-support requirements for a temporary base camp, sized to OSHA Temporary Labor Camp Standard 1910.142.</p>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="sec-eyebrow">Input Requirements</div>
+    <div class="grid">
+      <div class="field">
+        <label for="purpose">Primary Purpose</label>
+        <select id="purpose">
+          <option value="military">Military Support</option>
+          <option value="fema">FEMA Disaster Response</option>
+          <option value="private-disaster">Private Sector Disaster Response</option>
+          <option value="man-camp">Private Sector Man Camp / Work Continuation</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="pax">Personnel (PAX)</label>
+        <input type="number" id="pax" min="1" placeholder="e.g. 500">
+      </div>
+      <div class="field">
+        <label for="days">Duration (Days)</label>
+        <input type="number" id="days" min="1" placeholder="e.g. 90">
+      </div>
+      <div class="field">
+        <label for="surface">Camp Surface</label>
+        <select id="surface">
+          <option value="hardstand">Hardstand (asphalt, gravel, limestone)</option>
+          <option value="grass">Grass</option>
+        </select>
+      </div>
+    </div>
+
+    <div style="margin-top:24px" class="grid">
+      <div class="field">
+        <label>Parking Required?</label>
+        <div class="toggle-row" data-group="parking">
+          <button data-val="yes" class="on">Yes</button>
+          <button data-val="no">No</button>
+        </div>
+      </div>
+      <div class="field">
+        <label>Potable Water On Site?</label>
+        <div class="toggle-row" data-group="water">
+          <button data-val="yes">Yes</button>
+          <button data-val="no" class="on">No</button>
+        </div>
+      </div>
+      <div class="field">
+        <label>Sanitary Sewer On Site?</label>
+        <div class="toggle-row" data-group="sewer">
+          <button data-val="yes">Yes</button>
+          <button data-val="no" class="on">No</button>
+        </div>
+      </div>
+      <div class="field">
+        <label>OSHA 1910.142 Compliant?</label>
+        <div class="toggle-row" data-group="osha">
+          <button data-val="yes" class="on">Yes</button>
+          <button data-val="no">No</button>
+        </div>
+      </div>
+    </div>
+
+    <button class="calc-btn" id="calcBtn">See Your Results</button>
+  </div>
+</section>
+
+<section class="results" id="results">
+  <div class="wrap">
+    <div class="sec-eyebrow">What You'll Need</div>
+
+    <div class="summary-bar">
+      <div><div class="sv" id="s-pax">0</div><div class="sl">Personnel</div></div>
+      <div><div class="sv" id="s-days">0</div><div class="sl">Days</div></div>
+      <div><div class="sv" id="s-land">0</div><div class="sl">Acres (est.)</div></div>
+    </div>
+
+    <div class="rgrid" id="rgrid"></div>
+
+    <div class="note">
+      <b>Basis of estimate.</b> Sanitation quantities (toilets, showers, handwash sinks, laundry, drinking water) are derived directly from OSHA Temporary Labor Camp Standard 1910.142. Housing area, potable water volume, dining, and land are planning factors commonly used for temporary camps and should be confirmed against site conditions, local code, and the authority having jurisdiction. This tool produces a planning estimate, not an engineered design.
+    </div>
+    <div style="margin-top:20px"><a class="back" href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">&uarr; Start a new calculation</a></div>
+  </div>
+</section>
+
+<footer>TCVERIS, LLC &middot; Nationwide &amp; Global</footer>
+
+<script>
+// toggle button groups
+const state = {parking:'yes', water:'no', sewer:'no', osha:'yes'};
+document.querySelectorAll('.toggle-row').forEach(row=>{
+  const group=row.dataset.group;
+  row.querySelectorAll('button').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      row.querySelectorAll('button').forEach(b=>b.classList.remove('on'));
+      btn.classList.add('on');
+      state[group]=btn.dataset.val;
+    });
+  });
+});
+
+function ceilDiv(a,b){return Math.ceil(a/b);}
+
+document.getElementById('calcBtn').addEventListener('click',()=>{
+  const pax=parseInt(document.getElementById('pax').value)||0;
+  const days=parseInt(document.getElementById('days').value)||0;
+  if(pax<1){alert('Enter the number of personnel (PAX).');return;}
+  const osha = state.osha==='yes';
+
+  // OSHA 1910.142 ratios (verified): toilets 1/15 (min 2), showers 1/10,
+  // handwash 1/6, laundry 1/30, drinking fountains 1/100.
+  const toilets   = osha ? Math.max(2, ceilDiv(pax,15)) : ceilDiv(pax,20);
+  const showers   = ceilDiv(pax,10);
+  const sinks     = ceilDiv(pax,6);
+  const laundry   = ceilDiv(pax,30);
+  const fountains = ceilDiv(pax,100);
+
+  // Planning factors (clearly labeled as such)
+  const waterGpd  = pax*35;                 // 35 gal/person/day
+  const housingSf = pax*50;                 // 50 sqft/person min (OSHA shelter)
+  const diningSf  = pax*15;                 // ~15 sqft/person dining planning factor
+  const recSf     = pax*8;                  // recreation planning factor
+  const lightTwrs = Math.max(2, ceilDiv(pax,75)); // ~1 light tower / 75 persons planning
+  // land: housing+dining+rec+circulation; ~rough acreage planning factor
+  const totalSf   = housingSf + diningSf + recSf;
+  const acres     = Math.max(1, Math.round((totalSf*2.5/43560)*10)/10); // 2.5x for roads/spacing
+
+  document.getElementById('s-pax').textContent=pax.toLocaleString();
+  document.getElementById('s-days').textContent=days.toLocaleString();
+  document.getElementById('s-land').textContent=acres;
+
+  const items=[
+    ['Toilets', toilets, '', osha?'1 per 15 persons, min 2 — 1910.142(d)':'planning ratio (non-OSHA)'],
+    ['Shower Heads', showers, '', '1 per 10 persons — 1910.142(f)(1)(ii)'],
+    ['Handwash Sinks', sinks, '', '1 basin per 6 persons — 1910.142(f)(1)(i)'],
+    ['Laundry (Washer+Dryer)', laundry, '', '1 per 30 persons — 1910.142(f)(1)(iii)'],
+    ['Drinking Fountains', fountains, '', '1 per 100 occupants — 1910.142(c)'],
+    ['Fresh Water', waterGpd.toLocaleString(), 'gal/day', '35 gal/person/day (planning factor)'],
+    ['Tented Housing', housingSf.toLocaleString(), 'sq ft', 'min 50 sq ft/person — 1910.142(b)(2)'],
+    ['Dining Facility', diningSf.toLocaleString(), 'sq ft', '~15 sq ft/person (planning factor)'],
+    ['Recreation Area', recSf.toLocaleString(), 'sq ft', '~8 sq ft/person (planning factor)'],
+    ['Light Towers', lightTwrs, '', '~1 per 75 persons (planning factor)'],
+  ];
+  const grid=document.getElementById('rgrid');
+  grid.innerHTML='';
+  items.forEach(([label,val,unit,basis])=>{
+    const d=document.createElement('div');
+    d.className='rcard';
+    d.innerHTML=`<div class="rlabel">${label}</div><div class="rval">${val}${unit?' <span>'+unit+'</span>':''}</div><div class="rbasis">${basis}</div>`;
+    grid.appendChild(d);
+  });
+
+  document.getElementById('results').classList.add('show');
+  document.getElementById('results').scrollIntoView({behavior:'smooth'});
+});
+</script>
 </body>
 </html>
